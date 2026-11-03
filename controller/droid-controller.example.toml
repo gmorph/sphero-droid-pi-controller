@@ -1,0 +1,97 @@
+# droid-controller configuration. Install as /etc/droid-controller.toml
+# (or pass --config PATH). Every key is optional; the values below are the
+# defaults, so a missing file behaves exactly like this one.
+
+[gamepad]
+# Radial dead zone for both sticks, as a fraction of full deflection (0.0 .. 0.99).
+dead_zone = 0.15
+# When several gamepads are present, prefer one whose name contains any of these
+# (case-insensitive). Any device with two stick axes and an A button is accepted.
+preferred_names = ["Xbox", "X-Box"]
+# Seconds between checks for a gamepad while none is connected.
+rescan_interval = 1.0
+# Stop the droid if no gamepad event (stick, button, anything) arrives for this
+# many seconds. 0 disables the check. Note a stick held perfectly still produces
+# no events, so this is a dead-man timer, not a "stick is centred" check.
+idle_timeout = 60.0
+# Show the controller state on the Xbox 360 ring of light: rotating while searching
+# for a droid, quadrant 1 solid while connected, slow blink while a droid sleeps.
+# Needs the udev rule deploy.sh installs (the LED is root-only by default).
+led = true
+
+[drive]
+# Speed sent at full stick deflection, 1 .. 255. 255 is too fast indoors.
+max_speed = 180
+# Stick magnitude is raised to this power before scaling to max_speed.
+# 1.0 is linear; higher values give finer control at low speed.
+speed_exponent = 1.5
+# Drive and dome updates per second (changes only).
+update_rate = 10.0
+# Seconds between re-sends of the current drive state while nothing changes, so
+# a droid that has gone away is noticed promptly. 0 disables.
+heartbeat_interval = 5.0
+# How far the left trigger must be pressed (0.0 .. 1.0) to enter aim mode.
+aim_trigger_threshold = 0.5
+# Degrees per second the heading turns in aim mode at full left stick deflection.
+aim_turn_rate = 90.0
+# Degrees added to every heading sent to the droid. Use this if, after aiming, the droid
+# consistently drives a fixed angle away from where the stick points.
+heading_offset = 0
+
+[droid]
+# Exact Bluetooth names to connect to, most preferred first, e.g. ["D2-F5CA", "BB-1A2B"].
+# Empty means any droid allowed by name_prefixes. Back (select) opens a menu of the
+# droids in range on the screen, so this only decides which droid is taken at startup.
+names = []
+# Only connect to droids whose Bluetooth name starts with one of these (ignored when
+# names is set). Empty means any R2-D2 ("D2-"), R2-Q5 ("Q5-"), BB-8 ("BB-") or BB-9E ("GB-").
+name_prefixes = []
+# Seconds to scan for droids per attempt.
+scan_timeout = 5.0
+# Delay between connection attempts: starts at min and doubles up to max.
+reconnect_backoff_min = 2.0
+reconnect_backoff_max = 30.0
+# After Back (select) puts the droid to sleep, wait this long before scanning
+# again (connecting wakes the droid).
+sleep_rescan_delay = 5.0
+# Main LED colour as [red, green, blue], 0 .. 255 each. Start toggles it on and off.
+main_led = [0, 100, 255]
+
+[r2]
+# R2-D2 and R2-Q5 only. Each value is "animation:NAME" or "sound:NAME" where NAME
+# is a member of spherov2.toy.r2d2.R2D2.Animations or R2D2.Audio (R2-Q5 shares
+# the sounds and most animations). Unknown names disable that button with a
+# warning in the log. Examples: EMOTE_SCAN, WWM_DOUBLE_TAKE, sound:R2_BURNOUT,
+# sound:R2_ENGAGE_HYPER_DRIVE, sound:R2_HEAD_SPIN.
+a = "animation:EMOTE_YES"
+b = "animation:EMOTE_NO"
+x = "animation:EMOTE_LAUGH"
+y = "animation:EMOTE_EXCITED"
+dpad_up = "animation:WWM_BOW"
+dpad_down = "animation:EMOTE_ALARM"
+dpad_left = "sound:R2_SCREAM"
+dpad_right = "sound:R2_LAUGH_1"
+
+[display]
+# Status screen on a small I2C OLED (SSD1306 or SH1106, 128x64) wired to the Pi's
+# I2C pins: VCC to 3V3 (pin 1), GND to GND (pin 6), SDA to GPIO 2 (pin 3), SCL to
+# GPIO 3 (pin 5). I2C must be enabled (raspi-config nonint do_i2c 0). When no
+# screen answers, the controller logs a warning and runs without one.
+enabled = true
+# "ssd1306" for most 0.96" modules, "sh1106" for most 1.3" modules.
+driver = "ssd1306"
+i2c_port = 1
+# Run `i2cdetect -y 1` on the Pi: the module shows up as 3c or, rarely, 3d.
+i2c_address = 0x3C
+width = 128
+height = 64
+# Quarter turns clockwise, for a screen mounted on its side or upside down.
+rotate = 0
+# Redraws per second at most; the screen only redraws when something changed.
+refresh_rate = 4.0
+# 0 .. 255.
+contrast = 255
+
+[logging]
+# DEBUG, INFO, WARNING or ERROR. Drive commands are only logged at DEBUG.
+level = "INFO"

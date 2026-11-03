@@ -1,0 +1,18 @@
+# Template: deploy.sh substitutes @PI_USER@ and @VENV@ when installing.
+[Unit]
+Description=Sphero droid gamepad controller
+After=bluetooth.target network.target
+Wants=bluetooth.target
+
+[Service]
+Type=simple
+User=@PI_USER@
+SupplementaryGroups=input bluetooth i2c
+Environment=PYTHONUNBUFFERED=1
+ExecStart=@VENV@/bin/droid-controller
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+
+[Install]
+WantedBy=multi-user.target

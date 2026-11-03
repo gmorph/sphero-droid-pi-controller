@@ -1,0 +1,22 @@
+# Settings for pi/flash.sh. Copy to ~/.config/sphero-droid/flash.conf and edit.
+# Plain bash assignments; every line is optional except WIFI_SSID and WIFI_COUNTRY.
+
+# Wi-Fi network the Pi joins on first boot. The password goes in
+# ~/.config/sphero-droid/wifi.psk (one line, never in this file).
+WIFI_SSID="MyNetwork"
+WIFI_COUNTRY="AU"            # two-letter regulatory domain
+
+# Hostname and user created on the Pi. Default user: whoever runs flash.sh.
+PI_HOSTNAME="droid"
+#PI_USER="grant"
+
+# Defaults to this machine's timezone.
+#TIMEZONE="Australia/Sydney"
+
+# SSH public keys installed for PI_USER. Default: every ~/.ssh/*.pub of the user running flash.sh.
+#SSH_KEYS=("$HOME/.ssh/id_ed25519.pub")
+
+# Where the Raspberry Pi OS image lives and which one it is (sha256 is checked before writing).
+#IMAGE_DIR="$HOME/.cache/sphero-droid"
+#IMAGE_NAME="2026-10-06-raspios-trixie-armhf-lite.img.xz"
+#IMAGE_SHA256="2c302771f34c67a0b7ae7aa2e0dcdd3eac660504be59193c011ba79d412e1632"

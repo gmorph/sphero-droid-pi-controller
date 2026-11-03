@@ -1,0 +1,2 @@
+# Let members of the input group set the Xbox 360 controller's LED ring pattern.
+ACTION=="add", SUBSYSTEM=="leds", KERNEL=="xpad*", RUN+="/bin/sh -c 'chgrp input /sys%p/brightness && chmod g+w /sys%p/brightness'"
