@@ -7,6 +7,8 @@ name = "droid-controller"
 version = "0.1.0"
 description = "Drive Sphero Star Wars droids (R2-D2, R2-Q5, BB-8, BB-9E) from an Xbox 360 gamepad"
 requires-python = ">=3.11"
+license = "GPL-3.0-or-later"
+authors = [{ name = "Grant Morphett", email = "grant@gmorph.com" }]
 # evdev and bleak come from apt (python3-evdev, python3-bleak) on the Pi and are
 # visible through the --system-site-packages venv, so spherov2 is the only pip dependency.
 dependencies = ["spherov2==0.12.1"]

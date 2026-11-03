@@ -254,3 +254,10 @@ The tests need no hardware. Screen rendering is tested through the pure `render`
 function with Pillow; the Pi needs `python3-luma.oled` as well, which the flash
 script installs. See [controller/README.md](controller/README.md) for the module
 layout and the dry-run modes.
+
+## Licence
+
+Copyright (C) 2026 Grant Morphett. Licensed under the GNU General Public License
+version 3 or later; see [LICENSE](LICENSE). You may run, study, change and share
+it, and anything you distribute that includes it must be shared under the same
+terms with its source. The spherov2 library it depends on is MIT licensed.
